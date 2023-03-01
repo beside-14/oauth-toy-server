@@ -1,6 +1,6 @@
-package com.bside.v8.domain.entity
+package com.bside.v8.user.adapter.output.entity
 
-import com.bside.v8.domain.enumerate.Platform
+import com.bside.v8.user.adapter.output.enumerate.Platform
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -10,6 +10,9 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 
 @Entity
@@ -32,7 +35,8 @@ class EUser(
     @Enumerated(EnumType.STRING)
     @Column(name = "platform", columnDefinition = "varchar", length = 15)
     val platform: Platform = Platform.EMAIL
-) {
+) : UserDetails {
+
     @CreatedDate
     @Column(
         name = "created_at",
@@ -41,4 +45,19 @@ class EUser(
         insertable = false
     )
     val createdAt: LocalDateTime = LocalDateTime.now()
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
+        mutableListOf(SimpleGrantedAuthority(this.platform.name))
+
+    override fun getPassword(): String = this.password
+
+    override fun getUsername(): String = this.email
+
+    override fun isAccountNonExpired(): Boolean = true
+
+    override fun isAccountNonLocked(): Boolean = true
+
+    override fun isCredentialsNonExpired(): Boolean = true
+
+    override fun isEnabled(): Boolean = true
 }
