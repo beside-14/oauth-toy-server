@@ -1,4 +1,4 @@
-package com.bside.v8.global.service
+package com.bside.v8.global.manager
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -11,7 +11,7 @@ import java.security.Key
 import java.util.Date
 
 @Service
-class JwtService {
+class JwtManager {
 
     /**
      * 암호화 키
@@ -28,7 +28,8 @@ class JwtService {
      * JWT 내부에서 Claim 객체 찾기
      */
     fun <T> extractClaim(
-        token: String, claimsResolver: (Claims) -> T
+        token: String,
+        claimsResolver: (Claims) -> T
     ): T {
         val claims = this.extractAllClaims(token)
         return claimsResolver.invoke(claims)

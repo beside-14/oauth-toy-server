@@ -1,6 +1,6 @@
 package com.bside.v8.global.filter
 
-import com.bside.v8.global.service.JwtService
+import com.bside.v8.global.manager.JwtManager
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthenticationFilter(
-    private val jwtService: JwtService,
+    private val jwtManager: JwtManager,
     private val userDetailsService: UserDetailsService
 ) : OncePerRequestFilter() {
 
@@ -36,7 +36,7 @@ class JwtAuthenticationFilter(
         val jwt = authHeader.substring(7)
 
         // 유저 Email
-        val userEmail = jwtService.extractUserName(jwt)
+        val userEmail = jwtManager.extractUserName(jwt)
 
         // 인증받지 않은 유저인 경우
         if (userEmail.isNotBlank() && SecurityContextHolder.getContext().authentication == null) {
@@ -44,7 +44,7 @@ class JwtAuthenticationFilter(
             val userDetails = this.userDetailsService.loadUserByUsername(userEmail)
 
             // 유저 데이터의 인증 유효성 체크
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            if (jwtManager.isTokenValid(jwt, userDetails)) {
                 // 인증 토큰 생성
                 val authToken = UsernamePasswordAuthenticationToken(
                     userDetails,

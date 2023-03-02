@@ -21,7 +21,7 @@ class EUser(
     @Id
     @Column(name = "id", columnDefinition = "int")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
 
     @Column(name = "nickname", columnDefinition = "varchar", length = 20)
     val nickname: String,
@@ -30,7 +30,7 @@ class EUser(
     val email: String,
 
     @Column(name = "password", columnDefinition = "mediumtext")
-    val password: String,
+    val pw: String,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "platform", columnDefinition = "varchar", length = 15)
@@ -49,7 +49,7 @@ class EUser(
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
         mutableListOf(SimpleGrantedAuthority(this.platform.name))
 
-    override fun getPassword(): String = this.password
+    override fun getPassword(): String = this.pw
 
     override fun getUsername(): String = this.email
 
