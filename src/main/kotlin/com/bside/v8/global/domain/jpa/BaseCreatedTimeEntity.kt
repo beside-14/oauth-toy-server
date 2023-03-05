@@ -14,11 +14,11 @@ open class BaseCreatedTimeEntity {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private var createdDate = LocalDateTime.MIN
+    var createdDate = LocalDateTime.MIN
         private set
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private var createdBy = ""
+    var createdBy = ""
         private set
 }

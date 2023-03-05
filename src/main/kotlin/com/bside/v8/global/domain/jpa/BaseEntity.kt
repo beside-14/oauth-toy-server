@@ -9,10 +9,10 @@ import java.time.LocalDateTime
 open class BaseEntity : BaseCreatedTimeEntity() {
 
     @LastModifiedDate
-    private var lastModifiedDate = LocalDateTime.MIN
+    var lastModifiedDate = LocalDateTime.MIN
         private set
 
     @LastModifiedBy
-    private var lastModifiedBy = ""
+    var lastModifiedBy = ""
         private set
 }
