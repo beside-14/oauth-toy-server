@@ -10,6 +10,5 @@ enum class ApiResponseCode(val message: String) {
     BAD_REQUEST_BODY("요청 Body 정보가 누락되었습니다."),
     NOT_FOUND("리소스를 찾지 못했습니다."),
     UNAUTHORIZED("인증에 실패하였습니다."),
-    SERVER_ERROR("서버 에러입니다."),
-
+    SERVER_ERROR("서버 에러입니다.")
 }

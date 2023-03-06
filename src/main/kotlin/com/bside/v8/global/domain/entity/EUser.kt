@@ -1,6 +1,6 @@
-package com.bside.v8.user.adapter.output.entity
+package com.bside.v8.global.domain.entity
 
-import com.bside.v8.user.adapter.output.enumerate.Platform
+import com.bside.v8.global.domain.enumerate.Platform
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

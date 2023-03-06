@@ -1,7 +1,7 @@
 package com.bside.v8.auth.adapter.input.request
 
 import com.bside.v8.auth.application.port.input.RegisterCommand
-import com.bside.v8.user.adapter.output.enumerate.Platform
+import com.bside.v8.global.domain.enumerate.Platform
 
 data class RegisterRequest(
     val nickName: String,

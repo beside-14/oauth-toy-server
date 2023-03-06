@@ -4,6 +4,7 @@ import com.bside.v8.auth.adapter.input.request.RegisterRequest
 import com.bside.v8.auth.adapter.input.response.AuthenticationResponse
 import com.bside.v8.auth.application.port.input.RegisterUseCase
 import com.bside.v8.global.annotation.WebAdapter
+import com.bside.v8.global.response.ApiResponseDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,10 +17,10 @@ class RegisterController(
     @PostMapping("/api/v1/auth/register")
     fun register(
         @RequestBody registerRequest: RegisterRequest
-    ): ResponseEntity<AuthenticationResponse> {
+    ): ResponseEntity<ApiResponseDto<AuthenticationResponse>> {
         val token = registerUseCase.register(registerRequest.command())
         val response = AuthenticationResponse(token)
 
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok(ApiResponseDto.OK(response))
     }
 }

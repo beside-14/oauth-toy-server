@@ -1,7 +1,7 @@
 package com.bside.v8.auth.adapter.output.mapper
 
 import com.bside.v8.auth.domain.User
-import com.bside.v8.user.adapter.output.entity.EUser
+import com.bside.v8.global.domain.entity.EUser
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 

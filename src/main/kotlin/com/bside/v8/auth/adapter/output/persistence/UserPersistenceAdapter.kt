@@ -5,8 +5,8 @@ import com.bside.v8.auth.application.port.output.FindAndCreateTokenPort
 import com.bside.v8.auth.application.port.output.RegisterUserAndCreateTokenPort
 import com.bside.v8.auth.domain.User
 import com.bside.v8.global.annotation.PersistenceAdapter
+import com.bside.v8.global.domain.repository.UserRepository
 import com.bside.v8.global.manager.JwtManager
-import com.bside.v8.user.adapter.output.repository.UserRepository
 
 @PersistenceAdapter
 class UserPersistenceAdapter(

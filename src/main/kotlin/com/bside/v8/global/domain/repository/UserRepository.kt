@@ -1,6 +1,6 @@
-package com.bside.v8.user.adapter.output.repository
+package com.bside.v8.global.domain.repository
 
-import com.bside.v8.user.adapter.output.entity.EUser
+import com.bside.v8.global.domain.entity.EUser
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.querydsl.QuerydslPredicateExecutor
 import org.springframework.stereotype.Repository

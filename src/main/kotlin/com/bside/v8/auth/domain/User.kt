@@ -1,6 +1,6 @@
 package com.bside.v8.auth.domain
 
-import com.bside.v8.user.adapter.output.enumerate.Platform
+import com.bside.v8.global.domain.enumerate.Platform
 
 data class User(
     val nickName: String,
