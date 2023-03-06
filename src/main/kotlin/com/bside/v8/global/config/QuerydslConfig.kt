@@ -12,7 +12,7 @@ class QuerydslConfig {
     private lateinit var entityManager: EntityManager
 
     @Bean
-    fun jpaQueryFactory(): JPAQueryFactory? {
+    fun jpaQueryFactory(): JPAQueryFactory {
         return JPAQueryFactory(entityManager)
     }
 }
