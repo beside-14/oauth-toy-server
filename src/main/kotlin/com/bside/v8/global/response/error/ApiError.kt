@@ -4,10 +4,10 @@ import com.bside.v8.global.response.ApiResponseCode
 import java.time.LocalDateTime
 
 class ApiError(
-        private val code: ApiResponseCode,
+        val code: ApiResponseCode,
         e: Throwable
 ) {
-    private val message = code.message
-    private val timestamp = LocalDateTime.now()
-    private var debugMessage = e.toString()
+    val message = code.message
+    val timestamp = LocalDateTime.now()
+    val debugMessage = e.toString()
 }
