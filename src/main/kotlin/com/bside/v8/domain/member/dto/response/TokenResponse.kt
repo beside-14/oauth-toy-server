@@ -1,5 +1,5 @@
 package com.bside.v8.domain.member.dto.response
 
-data class AuthenticationResponse(
+data class TokenResponse(
     val token: String
 )

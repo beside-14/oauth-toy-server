@@ -1,7 +1,7 @@
 package com.bside.v8.domain.member.api
 
-import com.bside.v8.domain.member.application.SignUpService
-import com.bside.v8.domain.member.dto.request.SignUpRequest
+import com.bside.v8.domain.member.application.SignInService
+import com.bside.v8.domain.member.dto.request.SignInRequest
 import com.bside.v8.domain.member.dto.response.TokenResponse
 import com.bside.v8.global.response.ApiResponseDto
 import org.springframework.web.bind.annotation.PostMapping
@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class SignUpController(
-    private val signUpService: SignUpService
+class SignInController(
+    private val signInService: SignInService
 ) {
 
-    @PostMapping("/member/sign-up")
-    fun signUp(
-        @RequestBody signUpRequest: SignUpRequest
+    @PostMapping("/member/sign-in")
+    fun signIn(
+        @RequestBody signInRequest: SignInRequest
     ): ApiResponseDto<TokenResponse> {
-        val token = signUpService.signUp(signUpRequest.command())
+        val token = signInService.signIn(signInRequest.command())
         val response = TokenResponse(token)
         return ApiResponseDto.OK(response)
     }

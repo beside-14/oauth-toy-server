@@ -1,18 +1,18 @@
 package com.bside.v8.domain.member.application
 
-import com.bside.v8.domain.member.dao.persistence.FindAndCreatePersistenceAdapter
-import com.bside.v8.domain.member.dto.command.AuthenticationCommand
+import com.bside.v8.domain.member.dao.persistence.SignUpPersistenceAdapter
+import com.bside.v8.domain.member.dto.command.SignInCommand
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
 
 @Service
-class AuthenticationService(
+class SignInService(
     private val authenticationManager: AuthenticationManager,
-    private val findAndCreatePersistenceAdapter: FindAndCreatePersistenceAdapter
+    private val signUpPersistenceAdapter: SignUpPersistenceAdapter
 ) {
 
-    fun authentication(command: AuthenticationCommand): String {
+    fun signIn(command: SignInCommand): String {
         // 사용자 인증
         authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
@@ -22,6 +22,6 @@ class AuthenticationService(
         )
 
         // 유저 조회 및 토큰 생성
-        return findAndCreatePersistenceAdapter.findAndCreate(command.email)
+        return signUpPersistenceAdapter.signup(command.email)
     }
 }

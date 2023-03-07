@@ -1,6 +1,6 @@
 package com.bside.v8.domain.member.dto.request
 
-import com.bside.v8.domain.member.dto.command.RegisterCommand
+import com.bside.v8.domain.member.dto.command.SignUpCommand
 import com.bside.v8.domain.model.Platform
 
 data class SignUpRequest(
@@ -10,5 +10,5 @@ data class SignUpRequest(
     val platform: Platform
 ) {
 
-    fun command(): RegisterCommand = RegisterCommand(nickName, email, password, platform)
+    fun command(): SignUpCommand = SignUpCommand(nickName, email, password, platform)
 }
