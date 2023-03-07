@@ -1,6 +1,6 @@
 package com.bside.v8.global.config
 
-import com.bside.v8.user.domain.repository.MemberRepository
+import com.bside.v8.domain.member.dao.repository.MemberRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
