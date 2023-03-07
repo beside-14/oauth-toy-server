@@ -1,6 +1,6 @@
-package com.bside.v8.global.domain.entity
+package com.bside.v8.user.domain.entity
 
-import com.bside.v8.global.domain.enumerate.Platform
+import com.bside.v8.user.domain.enumerate.Platform
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -16,8 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "user")
-class EUser(
+@Table(name = "member")
+class Member(
     @Id
     @Column(name = "id", columnDefinition = "int")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

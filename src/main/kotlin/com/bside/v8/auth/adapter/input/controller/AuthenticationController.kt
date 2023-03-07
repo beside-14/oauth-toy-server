@@ -5,7 +5,6 @@ import com.bside.v8.auth.adapter.input.response.AuthenticationResponse
 import com.bside.v8.auth.application.port.input.AuthenticationUseCase
 import com.bside.v8.global.annotation.WebAdapter
 import com.bside.v8.global.response.ApiResponseDto
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
@@ -17,9 +16,9 @@ class AuthenticationController(
     @PostMapping("/api/v1/auth/authenticate")
     fun authenticate(
         @RequestBody authenticationRequest: AuthenticationRequest
-    ): ResponseEntity<ApiResponseDto<AuthenticationResponse>> {
+    ): ApiResponseDto<AuthenticationResponse> {
         val token = authenticationUseCase.authentication(authenticationRequest.command())
         val response = AuthenticationResponse(token)
-        return ResponseEntity.ok(ApiResponseDto.OK(response))
+        return ApiResponseDto.OK(response)
     }
 }

@@ -1,6 +1,6 @@
 package com.bside.v8.global.config
 
-import com.bside.v8.global.domain.repository.UserRepository
+import com.bside.v8.user.domain.repository.MemberRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -14,12 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class ApplicationConfig(
-    private val userRepository: UserRepository
+    private val memberRepository: MemberRepository
 ) {
 
     @Bean
     fun userDetailsService(): UserDetailsService = UserDetailsService {
-        userRepository.findByEmail(it)
+        memberRepository.findByEmail(it)
             .orElseThrow { UsernameNotFoundException("찾을 수 없는 유저입니다.") }
     }
 

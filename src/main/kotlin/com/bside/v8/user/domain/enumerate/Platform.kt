@@ -1,4 +1,4 @@
-package com.bside.v8.global.domain.enumerate
+package com.bside.v8.user.domain.enumerate
 
 enum class Platform(val desc: String) {
     EMAIL("이메일"),
