@@ -44,4 +44,10 @@ class GlobalExceptionHandler {
         val apiError = ApiError(ApiResponseCode.BAD_REQUEST_BODY, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
+
+    @ExceptionHandler(IllegalAccessException::class)
+    fun handle(e: IllegalAccessException): ResponseEntity<ApiError> {
+        val apiError = ApiError(ApiResponseCode.NOT_FOUND, e)
+        return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
+    }
 }

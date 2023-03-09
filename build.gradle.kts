@@ -132,6 +132,10 @@ tasks {
         archiveVersion.set("")
     }
 
+    withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+
     val copyDocument by registering(Copy::class) {
         dependsOn(asciidoctor)
 
