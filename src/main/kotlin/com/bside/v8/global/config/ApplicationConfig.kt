@@ -1,6 +1,5 @@
 package com.bside.v8.global.config
 
-import com.bside.v8.domain.member.dao.repository.MemberRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -8,20 +7,13 @@ import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class ApplicationConfig(
-    private val memberRepository: MemberRepository
+    private val customUserDetailService: UserDetailsService
 ) {
-
-    @Bean
-    fun userDetailsService(): UserDetailsService = UserDetailsService {
-        memberRepository.findByEmail(it)
-            .orElseThrow { UsernameNotFoundException("찾을 수 없는 유저입니다.") }
-    }
 
     /**
      * AuthenticationProvider?
@@ -30,7 +22,7 @@ class ApplicationConfig(
     @Bean
     fun authenticationProvider(): AuthenticationProvider {
         val provider = DaoAuthenticationProvider()
-        provider.setUserDetailsService(userDetailsService())
+        provider.setUserDetailsService(customUserDetailService)
         provider.setPasswordEncoder(passwordEncoder())
 
         return provider

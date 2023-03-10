@@ -6,6 +6,7 @@ import org.hibernate.exception.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.MissingServletRequestParameterException
@@ -45,9 +46,9 @@ class GlobalExceptionHandler {
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(IllegalAccessException::class)
-    fun handle(e: IllegalAccessException): ResponseEntity<ApiError> {
-        val apiError = ApiError(ApiResponseCode.NOT_FOUND, e)
-        return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handle(e: AccessDeniedException): ResponseEntity<ApiError> {
+        val apiError = ApiError(ApiResponseCode.UNAUTHORIZED, e)
+        return ResponseEntity(apiError, HttpStatus.UNAUTHORIZED)
     }
 }

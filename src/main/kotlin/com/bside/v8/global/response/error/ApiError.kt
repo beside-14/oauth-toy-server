@@ -3,9 +3,9 @@ package com.bside.v8.global.response.error
 import com.bside.v8.global.response.ApiResponseCode
 import java.time.LocalDateTime
 
-class ApiError(
+data class ApiError(
     val code: ApiResponseCode,
-    e: Throwable
+    private val e: Throwable
 ) {
     val message = code.message
     val timestamp = LocalDateTime.now()

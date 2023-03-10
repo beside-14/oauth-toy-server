@@ -1,4 +1,4 @@
-package com.bside.v8.domain.model
+package com.bside.v8.domain.member.domain
 
 enum class Platform(val desc: String) {
     EMAIL("이메일"),
