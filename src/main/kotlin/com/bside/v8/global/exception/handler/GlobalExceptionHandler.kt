@@ -6,13 +6,13 @@ import org.hibernate.exception.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import javax.security.auth.login.AccountException
+import javax.security.auth.login.LoginException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -52,7 +52,13 @@ class GlobalExceptionHandler {
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(value = [AccessDeniedException::class, BadCredentialsException::class, AccountException::class])
+    @ExceptionHandler(
+        value = [
+            AccessDeniedException::class,
+            LoginException::class,
+            AuthenticationException::class
+        ]
+    )
     fun handle(e: Exception): ResponseEntity<ApiError> {
         e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.UNAUTHORIZED, e)

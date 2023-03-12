@@ -3,6 +3,7 @@ package com.bside.v8.global.config
 import com.bside.v8.global.filter.AuthFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -23,7 +24,7 @@ class SecurityConfig(
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers("/auth/**")
+            .requestMatchers(HttpMethod.POST, "/member", "/member/sign-up")
             .permitAll()
             .anyRequest()
             .authenticated()

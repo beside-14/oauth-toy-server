@@ -9,6 +9,7 @@ data class AuthCommand(
     @NotBlank(message = "비밀번호를 입력해 주세요.")
     val password: String
 ) : SelfValidator() {
+
     init {
         validation()
     }

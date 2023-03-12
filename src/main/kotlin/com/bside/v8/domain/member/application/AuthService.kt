@@ -1,6 +1,7 @@
 package com.bside.v8.domain.member.application
 
 import com.bside.v8.domain.member.domain.MemberDetails
+import com.bside.v8.domain.member.exception.AlreadyExistException
 import com.bside.v8.domain.member.payload.command.AuthCommand
 import com.bside.v8.domain.member.payload.command.SignUpCommand
 import com.bside.v8.domain.member.persistence.MemberRepository
@@ -24,21 +25,26 @@ class AuthService(
      * 회원 가입
      */
     fun signUp(command: SignUpCommand): String {
-        val newMember = command.newMember(passwordEncoder.encode(command.password))
-        // 회원 등록
-        val member =
-            memberRepository.save(newMember)
+        return when (memberRepository.findByEmail(command.email).isPresent) {
+            true -> throw AlreadyExistException()
+            false -> {
+                val newMember = command.newMember(passwordEncoder.encode(command.password))
+                // 회원 등록
+                val member =
+                    memberRepository.save(newMember)
 
-        // UserDetails
-        val memberDetails = MemberDetails(member)
+                // UserDetails
+                val memberDetails = MemberDetails(member)
 
-        // JWT 발급
-        val jwt = jwtService.generateToken(memberDetails)
+                // JWT 발급
+                val jwt = jwtService.generateToken(memberDetails)
 
-        // Token 저장
-        saveToken(memberDetails, jwt)
+                // Token 저장
+                saveToken(memberDetails, jwt)
 
-        return jwt
+                jwt
+            }
+        }
     }
 
     /**
