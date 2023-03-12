@@ -1,12 +1,9 @@
 package com.bside.v8.domain.member.domain
 
-import com.bside.v8.domain.member.domain.Member
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.stereotype.Service
 
-@Service
 class CustomUserDetail(val member: Member) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =

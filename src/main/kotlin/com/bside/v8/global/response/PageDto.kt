@@ -2,20 +2,20 @@ package com.bside.v8.global.response
 
 import org.springframework.data.domain.Page
 
-class PageDto<T>(val page: Page<T>) {
-    private var contents: List<T>? = page.content
+class PageDto<T>(page: Page<T>) {
+    val contents: List<T> = if (page.isEmpty) emptyList() else page.content
 
-    private var totalElements: Long = page.totalElements
+    val totalElements: Long = page.totalElements
 
-    private var numberOfElements = page.numberOfElements
+    val numberOfElements = page.numberOfElements
 
-    private var currentPage = page.number + 1
+    val currentPage = page.number + 1
 
-    private var totalPages = page.totalPages
+    val totalPages = page.totalPages
 
-    private var size = page.size
+    val size = page.size
 
-    private var first = page.isFirst
+    val first = page.isFirst
 
-    private var last = page.isLast
+    val last = page.isLast
 }
