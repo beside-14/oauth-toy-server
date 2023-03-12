@@ -18,3 +18,6 @@ spring:
     url: jdbc:mysql://118.67.142.31:3306/bside?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul
     username: bside
     password: Bside-8-engine
+
+jwt:
+  key: 432646294A404E635266556A586E3272357538782F413F442A472D4B61506453

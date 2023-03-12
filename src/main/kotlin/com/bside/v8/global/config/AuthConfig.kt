@@ -1,0 +1,56 @@
+package com.bside.v8.global.config
+
+import com.bside.v8.domain.member.domain.MemberDetails
+import com.bside.v8.domain.member.persistence.MemberRepository
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+
+@Configuration
+class AuthConfig(
+    private val memberRepository: MemberRepository
+) {
+
+    @Bean
+    fun userDetailsService(): UserDetailsService = UserDetailsService {
+        MemberDetails(
+            memberRepository.findByEmail(it)
+                .orElseThrow { UsernameNotFoundException("찾을 수 없는 유저입니다.") }
+        )
+    }
+
+    /**
+     * AuthenticationProvider?
+     * - UserDetails 를 가져오고, 비밀번호를 인코딩하는 데이터 엑세스 개체이다.
+     */
+    @Bean
+    fun authenticationProvider(): AuthenticationProvider {
+        val provider = DaoAuthenticationProvider()
+        provider.setUserDetailsService(userDetailsService())
+        provider.setPasswordEncoder(passwordEncoder())
+
+        return provider
+    }
+
+    /**
+     * AuthenticationManager?
+     * - 사용자 이름 혹은 이름과 비밀번호를 기반으로 인증하는 방식이나 이를 위한 인증 저장소를 만드는 방식을 제공한다.
+     *
+     */
+    @Bean
+    fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager =
+        config.authenticationManager
+
+    /**
+     * 비밀번호 인코더
+     */
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+}

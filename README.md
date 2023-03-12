@@ -31,3 +31,6 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+### JWT Authentication
+
+![참고 영상](https://www.youtube.com/watch?v=KxqlJblhzfI&t=4225s)

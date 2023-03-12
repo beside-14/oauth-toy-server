@@ -18,6 +18,7 @@ node_modules/
 
 # Package files
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # Maven
 target/
@@ -49,7 +50,6 @@ Thumbs.db
 *.wmv
 
 .gradle/
-.idea/
 out/
 build/
 logger/

@@ -36,6 +36,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
     // QueryDSL
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
@@ -125,6 +131,10 @@ tasks {
         archiveBaseName.set("api")
         // BootJar 버전
         archiveVersion.set("")
+    }
+
+    withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 
     val copyDocument by registering(Copy::class) {
