@@ -1,12 +1,12 @@
 package com.bside.v8.global.response
 
-class ApiResponseDto<T> private constructor(
+data class ApiResponse<T>(
     val data: T,
     val code: ApiResponseCode
 ) {
     companion object Factory {
-        fun <T> OK(data: T): ApiResponseDto<T> {
-            return ApiResponseDto(data, ApiResponseCode.OK)
+        fun <T> OK(data: T): ApiResponse<T> {
+            return ApiResponse(data, ApiResponseCode.OK)
         }
     }
 

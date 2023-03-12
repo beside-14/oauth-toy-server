@@ -6,48 +6,56 @@ import org.hibernate.exception.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import javax.security.auth.login.AccountException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingRequestHeaderException::class)
     fun handle(e: MissingRequestHeaderException): ResponseEntity<ApiError> {
+        e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.MISSING_REQUEST_HEADER, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(MissingServletRequestParameterException::class)
     fun handle(e: MissingServletRequestParameterException): ResponseEntity<ApiError> {
+        e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.MISSING_REQUEST_PARAMETER, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handle(e: HttpMessageNotReadableException): ResponseEntity<ApiError> {
+        e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.NOT_READABLE_REQUEST_BODY, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun handle(e: ConstraintViolationException): ResponseEntity<ApiError> {
+        e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.BAD_REQUEST_HEADER, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handle(e: MethodArgumentNotValidException): ResponseEntity<ApiError> {
+        e.printStackTrace()
         val apiError = ApiError(ApiResponseCode.BAD_REQUEST_BODY, e)
         return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(IllegalAccessException::class)
-    fun handle(e: IllegalAccessException): ResponseEntity<ApiError> {
-        val apiError = ApiError(ApiResponseCode.NOT_FOUND, e)
-        return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = [AccessDeniedException::class, BadCredentialsException::class, AccountException::class])
+    fun handle(e: Exception): ResponseEntity<ApiError> {
+        e.printStackTrace()
+        val apiError = ApiError(ApiResponseCode.UNAUTHORIZED, e)
+        return ResponseEntity(apiError, HttpStatus.UNAUTHORIZED)
     }
 }

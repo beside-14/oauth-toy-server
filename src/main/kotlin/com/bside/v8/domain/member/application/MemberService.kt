@@ -1,49 +1,15 @@
 package com.bside.v8.domain.member.application
 
-import com.bside.v8.domain.member.dao.repository.MemberRepository
 import com.bside.v8.domain.member.domain.Member
-import com.bside.v8.domain.member.dto.command.SignInCommand
-import com.bside.v8.domain.member.dto.command.SignUpCommand
-import com.bside.v8.global.manager.JwtManager
-import org.springframework.security.crypto.password.PasswordEncoder
+import com.bside.v8.domain.member.persistence.MemberRepository
 import org.springframework.stereotype.Service
+import javax.security.auth.login.AccountNotFoundException
 
 @Service
 class MemberService(
-    private val jwtManager: JwtManager,
-    private val memberRepository: MemberRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val memberRepository: MemberRepository
 ) {
 
-    /**
-     * 로그인
-     */
-    fun signIn(command: SignInCommand): String {
-        val member =
-            memberRepository.findByEmail(command.email).orElseThrow { IllegalAccessException() }
-
-        return when (passwordEncoder.matches(command.password, member.password)) {
-            true -> jwtManager.generateToken(member)
-            false -> throw IllegalAccessException()
-        }
-    }
-
-    /**
-     * 회원가입
-     */
-    fun signUp(command: SignUpCommand): String =
-        when (memberRepository.findByEmail(command.email).isPresent) {
-            true -> throw IllegalAccessException()
-            false -> {
-                val newMember = memberRepository.save(
-                    Member(
-                        nickname = command.nickName,
-                        email = command.email,
-                        pw = command.password,
-                        platform = command.platform
-                    )
-                )
-                jwtManager.generateToken(newMember)
-            }
-        }
+    fun find(memberId: Long): Member =
+        memberRepository.findById(memberId).orElseThrow { AccountNotFoundException() }
 }

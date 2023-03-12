@@ -1,23 +1,21 @@
-package com.bside.v8.global.manager
+package com.bside.v8.domain.member.application
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.security.Key
 import java.util.Date
 
 @Service
-class JwtManager {
-
-    /**
-     * 암호화 키
-     */
-    private final val KEY =
-        "432646294A404E635266556A586E3272357538782F413F442A472D4B61506453"
+class JwtService(
+    @Value("\${jwt.key}")
+    private val key: String
+) {
 
     /**
      * JWT 내부에서 유저 이메일 찾기
@@ -92,7 +90,7 @@ class JwtManager {
      * BASE64 기반 암호화 인증키 생성
      */
     private fun getSignInKey(): Key {
-        val keyBytes = Decoders.BASE64.decode(KEY)
+        val keyBytes = Decoders.BASE64.decode(key)
         return Keys.hmacShaKeyFor(keyBytes)
     }
 }

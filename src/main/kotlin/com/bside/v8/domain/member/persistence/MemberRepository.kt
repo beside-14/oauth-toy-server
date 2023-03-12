@@ -1,4 +1,4 @@
-package com.bside.v8.domain.member.dao.repository
+package com.bside.v8.domain.member.persistence
 
 import com.bside.v8.domain.member.domain.Member
 import org.springframework.data.jpa.repository.JpaRepository

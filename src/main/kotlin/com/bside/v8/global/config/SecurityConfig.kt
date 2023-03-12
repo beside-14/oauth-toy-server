@@ -1,6 +1,6 @@
 package com.bside.v8.global.config
 
-import com.bside.v8.global.filter.JwtAuthenticationFilter
+import com.bside.v8.global.filter.AuthFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig(
     private val authenticationProvider: AuthenticationProvider,
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val authFilter: AuthFilter,
 ) {
 
     @Bean
@@ -23,7 +23,7 @@ class SecurityConfig(
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers("/api/v1/auth/**")
+            .requestMatchers("/auth/**")
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -34,7 +34,7 @@ class SecurityConfig(
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(
-                jwtAuthenticationFilter,
+                authFilter,
                 UsernamePasswordAuthenticationFilter::class.java
             )
 
