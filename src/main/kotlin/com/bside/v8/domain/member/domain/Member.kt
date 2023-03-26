@@ -1,5 +1,6 @@
 package com.bside.v8.domain.member.domain
 
+import com.bside.v8.domain.member.exception.MemberInputException
 import com.bside.v8.global.domain.jpa.BaseEntity
 import jakarta.persistence.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -22,6 +23,8 @@ class Member(
 
 ) : BaseEntity() {
     fun matches(password: String, passwordEncoder: BCryptPasswordEncoder) {
-            passwordEncoder.matches(password, this.password)
+        if (!passwordEncoder.matches(password, this.password)) {
+            throw MemberInputException("비밀번호가 일치하지 않습니다.")
+        }
     }
 }
