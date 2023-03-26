@@ -13,10 +13,12 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
         if (authHeader.isNullOrBlank() || !authHeader.startsWith("Bearer ")) {
             return filterChain.doFilter(request, response)
         }
-        val jwt = authHeader.substring("Bearer ".length)
+        validateJwt(authHeader.substring("Bearer ".length), filterChain, request, response)
+    }
+
+    private fun validateJwt(jwt: String, filterChain: FilterChain, request: HttpServletRequest, response: HttpServletResponse) {
         if (JwtProvider.isValidToken(jwt)) {
-            SecurityContextHolder.getContext()
-                    .authentication = JwtProvider.getAuthentication(jwt)
+            SecurityContextHolder.getContext().authentication = JwtProvider.getAuthentication(jwt)
         }
         filterChain.doFilter(request, response)
     }
