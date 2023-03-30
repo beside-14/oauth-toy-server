@@ -36,6 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // QueryDSL
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
@@ -43,8 +44,16 @@ dependencies {
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
 
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
     // MySql
     runtimeOnly("com.mysql:mysql-connector-j")
+
+    // H2
+    runtimeOnly("com.h2database:h2")
 
     // Test
     testImplementation("org.springframework.security:spring-security-test")
